@@ -1,3 +1,4 @@
+
 // Copyright 2015 Google Inc. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +20,8 @@ import (
 	"reflect"
 	"runtime"
 	"strings"
+
+	"stag/soong/android"
 
 	"github.com/google/blueprint/proptools"
 )
@@ -131,6 +134,9 @@ type variableProperties struct {
 			Srcs         []string `android:"arch_variant"`
 			Exclude_srcs []string `android:"arch_variant"`
 		} `android:"arch_variant"`
+
+		// include Stag variables
+		Stag android.Product_variables
 	} `android:"arch_variant"`
 }
 
@@ -336,6 +342,9 @@ type productVariables struct {
 	InstallExtraFlattenedApexes *bool `json:",omitempty"`
 
 	BoardUsesRecoveryAsBoot *bool `json:",omitempty"`
+
+	// include Stag variables
+	Stag android.ProductVariables
 }
 
 func boolPtr(v bool) *bool {
