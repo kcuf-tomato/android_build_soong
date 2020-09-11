@@ -1,4 +1,3 @@
-
 // Copyright 2015 Google Inc. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -601,6 +600,11 @@ func createVariableProperties(moduleTypeProps []interface{}, productVariables in
 func createVariablePropertiesType(moduleTypeProps []interface{}, productVariables interface{}) reflect.Type {
 	typ, _ := proptools.FilterPropertyStruct(reflect.TypeOf(productVariables),
 		func(field reflect.StructField, prefix string) (bool, reflect.StructField) {
+			if strings.HasPrefix(prefix, "Product_variables.Stag") {
+				// Convert Product_variables.Stag.Foo to Stag.Foo
+				_, prefix = splitPrefix(prefix)
+			}
+
 			// Filter function, returns true if the field should be in the resulting struct
 			if prefix == "" {
 				// Keep the top level Product_variables field
